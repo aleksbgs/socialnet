@@ -3,11 +3,11 @@ import { Item, Button, Label, Segment } from 'semantic-ui-react'
 import { IActivity } from '../../../app/models/activity'
 
 interface IProps {
-  activities: IActivity[],
-  selectActivity: (id: string) => void
+  activities: IActivity[];
+  selectActivity: (id: string) => void;
 }
 
-export const ActivityList: React.FC<IProps> = ({ activities, selectActivity}) => {
+export const ActivityList: React.FC<IProps> = ({ activities, selectActivity }) => {
   return (
     <Segment clearing>
       <Item.Group divided>

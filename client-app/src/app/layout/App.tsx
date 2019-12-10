@@ -12,6 +12,15 @@ const App = () => {
 
   const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(null);
 
+  const [editMode, setEditMode] = useState(false);
+
+
+  const handleOpenCreateForm = () => {
+    setSelectedActivity(null);
+    setEditMode(true);
+  }
+
+
   const handleSelectedActivity = (id: string) => {
     setSelectedActivity(activities.filter(a => a.id === id)[0])
   }
@@ -25,11 +34,18 @@ const App = () => {
 
   return (
     <Fragment>
-      <NavBar />
+      <NavBar openCreateForm={handleOpenCreateForm} />
       <Icon name='users' />
       <Header.Content>Reactivities</Header.Content>
       <Container style={{ marginTop: '7em' }}>
-        <ActivityDashboard activities={activities} selectActivity={handleSelectedActivity} selectedActivity={selectedActivity}/>
+        <ActivityDashboard
+          activities={activities}
+          selectActivity={handleSelectedActivity}
+          selectedActivity={selectedActivity}
+          editMode={editMode}
+          setEditMode={setEditMode}
+          setSelectedActivity={setSelectedActivity}
+        />
       </Container>
     </Fragment >
 
