@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, SyntheticEvent } from 'react';
 import './styles.css';
-import { Header, Icon, Container, Loader } from 'semantic-ui-react'
+import { Header, Icon, Container } from 'semantic-ui-react'
 import { IActivity } from '../models/activity';
 import NavBar from '../../features/nav/NavBar';
 import { ActivityDashboard } from '../../features/activities/dashboard/ActivityDashboard';
@@ -18,6 +18,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const [submitting, setSubmitting] = useState(false);
+
+  const [target, setTarget] = useState('');
 
   const handleOpenCreateForm = () => {
     setSelectedActivity(null);
@@ -44,8 +46,9 @@ const App = () => {
       setEditMode(false)
     }).then(() => setSubmitting(false))
   }
-  const handleDeleteActivity = (id: string) => {
+  const handleDeleteActivity = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
     setSubmitting(true);
+    setTarget(event.currentTarget.name);
     agent.Activites.delete(id).then(() => {
       setActivities([...activities.filter(a => a.id !== id)])
     }).then(() => setSubmitting(false))
@@ -82,6 +85,7 @@ const App = () => {
           editActivity={handleEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
+          target={target}
         />
       </Container>
     </Fragment >
