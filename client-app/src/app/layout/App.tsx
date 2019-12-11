@@ -5,7 +5,6 @@ import { Header, Icon, Container } from 'semantic-ui-react'
 import { IActivity } from '../models/activity';
 import NavBar from '../../features/nav/NavBar';
 import { ActivityDashboard } from '../../features/activities/dashboard/ActivityDashboard';
-import { ActivityDetals } from '../../features/activities/details/ActivityDetals';
 
 
 const App = () => {
@@ -33,6 +32,9 @@ const App = () => {
     setActivities([...activities.filter(a => a.id !== activity.id), activity])
     setSelectedActivity(activity)
     setEditMode(false)
+  }
+  const handleDeleteActivity = (id: string) => {
+    setActivities([...activities.filter(a => a.id !== id)])
   }
 
   useEffect(() => {
@@ -63,6 +65,7 @@ const App = () => {
           setSelectedActivity={setSelectedActivity}
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
+          deleteActivity={handleDeleteActivity}
         />
       </Container>
     </Fragment >

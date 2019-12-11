@@ -34,7 +34,7 @@ export const ActivityForm: React.FC<IProps> = ({ setEditMode, activity: initialF
     setActivity({ ...activity, [name]: value })
   }
   const handleSubmit = () => {
-    if (activity.id.length == 0) {
+    if (activity.id.length === 0) {
       let newActivity = { ...activity, id: uuid() }
       createActivity(newActivity)
     } else {
