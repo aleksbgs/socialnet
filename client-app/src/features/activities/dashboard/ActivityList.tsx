@@ -8,7 +8,7 @@ export const ActivityList: React.FC = () => {
 
   const activityStore = useContext(ActivityStore);
 
-  const { activitiesByDate, selectActivity, deleteActivity, submiting, target } = activityStore;
+  const { activitiesByDate, selectActivity, deleteActivity, submitting, target } = activityStore;
 
   return (
     <Segment clearing>
@@ -24,7 +24,7 @@ export const ActivityList: React.FC = () => {
               </Item.Description>
               <Item.Extra>
                 <Button onClick={() => selectActivity(activity.id)} floated='right' content='View' color='blue' />
-                <Button name={activity.id} loading={target === activity.id && submiting} onClick={(e) => deleteActivity(e, activity.id)} floated='right' content='Delete' color='red' />
+                <Button name={activity.id} loading={target === activity.id && submitting} onClick={(e) => deleteActivity(e, activity.id)} floated='right' content='Delete' color='red' />
                 <Label basic content={activity.category} />
               </Item.Extra>
             </Item.Content>

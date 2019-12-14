@@ -7,7 +7,7 @@ import ActivityStore from '../../../app/stores/activityStore';
 export const ActivityDetals: React.FC = () => {
 
   const activityStore = useContext(ActivityStore);
-  const { selectedActivity: activity, openEditForm, cancelSelectedActivity } = activityStore;
+  const { selectedActivity: activity, openEditForm, cancelSelectActivity } = activityStore;
 
   return (
     <Card fluid>
@@ -24,7 +24,7 @@ export const ActivityDetals: React.FC = () => {
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button onClick={() => openEditForm(activity!.id)} basic color="blue" content='Edit' />
-          <Button onClick={() => cancelSelectedActivity} basic color="grey" content='Cancel' />
+          <Button onClick={() => cancelSelectActivity} basic color="grey" content='Cancel' />
         </Button.Group>
       </Card.Content>
     </Card>
