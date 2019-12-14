@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { Grid } from 'semantic-ui-react'
-import { ActivityList } from './ActivityList'
-import { ActivityDetals } from '../details/ActivityDetals'
-import { ActivityForm } from '../form/ActivityForm'
+import ActivityList  from './ActivityList'
+import ActivityDetals  from '../details/ActivityDetals'
+import ActivityForm  from '../form/ActivityForm'
 import { observer } from 'mobx-react-lite';
 import ActivityStore from '../../../app/stores/activityStore';
 
-export const ActivityDashboard: React.FC = () => {
+const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const { editMode, selectedActivity } = activityStore;
 
