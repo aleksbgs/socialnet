@@ -78,13 +78,13 @@ export class ActivityStore {
       await agent.Activities.delete(id);
       runInAction('delete activity', () => {
         this.activityRegistry.delete(id);
-        this.submitting = true;
+        this.submitting = false;
         this.target = '';
       })
 
     } catch (error) {
       runInAction('error delete activity ', () => {
-      this.submitting = true;
+      this.submitting = false;
       this.target = '';
       })
       console.log('error', error);
