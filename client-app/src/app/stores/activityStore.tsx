@@ -40,15 +40,17 @@ export class ActivityStore {
   @action loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
     if (activity) {
-      this.selectActivity = activity;
+      this.activity = activity;
     } else {
       this.loadingInitial = true;
       try {
         activity = await agent.Activities.details(id);
         runInAction('getting activity', () => {
           this.activity = activity;
+          this.activityRegistry.set(activity.id, activity);
           this.loadingInitial = false;
         })
+        return activity;
       } catch (error) {
         runInAction('error geting activity', () => {
           console.log(error)
