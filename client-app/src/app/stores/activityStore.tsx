@@ -95,8 +95,11 @@ export class ActivityStore {
         this.submitting = false
       })
     } catch (error) {
-      this.submitting = false;
-      console.log(error)
+      runInAction('error editing activity', () => {
+        this.submitting = false;
+        console.log(error)
+      })
+
     }
   }
   @action deleteActivity = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {

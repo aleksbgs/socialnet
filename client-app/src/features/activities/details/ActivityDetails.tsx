@@ -6,7 +6,6 @@ import { RouteComponentProps, Link } from 'react-router-dom'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 
 
-
 interface DetailParams {
   id: string
 }
