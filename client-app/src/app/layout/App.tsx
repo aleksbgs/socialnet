@@ -11,8 +11,6 @@ import ActivityDetails from '../../features/activities/details/ActivityDetails';
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
 
-
-
   return (
     <Fragment>
       <Route exact path='/' component={HomePage} />
