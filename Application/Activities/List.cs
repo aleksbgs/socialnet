@@ -43,6 +43,7 @@ namespace Application.Activities
         // }
 
         var activities = await _context.Activities.ToListAsync(cancellationToken);
+        
         return activities;
       }
     }
