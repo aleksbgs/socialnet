@@ -34,8 +34,6 @@ const AcivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
       </Segment>
     </Segment.Group >
 
-
-
   )
 }
 
