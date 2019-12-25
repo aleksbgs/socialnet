@@ -36,7 +36,7 @@ export class ActivityStore {
         });
         this.loadingInitial = false;
       })
-      console.log(this.groupActivitiesByDate(activities));
+     // console.log(this.groupActivitiesByDate(activities));
     } catch (error) {
       runInAction('loading activities error', () => {
         console.log(error)
