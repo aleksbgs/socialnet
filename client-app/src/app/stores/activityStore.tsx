@@ -36,12 +36,13 @@ export class ActivityStore {
         });
         this.loadingInitial = false;
       })
-     // console.log(this.groupActivitiesByDate(activities));
+      // console.log(this.groupActivitiesByDate(activities));
     } catch (error) {
       runInAction('loading activities error', () => {
-        console.log(error)
+
         this.loadingInitial = false
       })
+      console.log(error)
     }
   }
   @action loadActivity = async (id: string) => {
@@ -60,10 +61,9 @@ export class ActivityStore {
         return activity;
       } catch (error) {
         runInAction('error geting activity', () => {
-          console.log(error)
           this.loadingInitial = false;
         })
-
+        console.log(error);
       }
     }
   }
@@ -102,9 +102,9 @@ export class ActivityStore {
     } catch (error) {
       runInAction('error editing activity', () => {
         this.submitting = false;
-        console.log(error)
-      })
 
+      })
+      console.log(error)
     }
   }
   @action deleteActivity = async (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
@@ -122,8 +122,9 @@ export class ActivityStore {
       runInAction('error delete activity', () => {
         this.submitting = false;
         this.target = '';
-        console.log(error);
+
       })
+      console.log(error);
     }
   }
   @action openCreateForm = () => {
