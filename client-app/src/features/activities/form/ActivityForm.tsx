@@ -8,6 +8,9 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Form as FinalForm, Field } from 'react-final-form';
 import TextInput from '../../../app/common/form/TextInput'
 import TextAreaInput from '../../../app/common/form/TextAreaInput'
+import SelectInput from '../../../app/common/form/SelectInput'
+import categoryOptions from '../../../app/common/options/categoryOptions'
+import DateInput from '../../../app/common/form/DateInput'
 
 interface DetailParams {
   id: string;
@@ -25,7 +28,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
     title: '',
     category: '',
     description: '',
-    date: '',
+    date: null,
     city: '',
     venue: ''
   });
@@ -69,8 +72,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
             <Form onSubmit={handleSubmit}>
               <Field name='title' placeholder='Title' value={activity.title} component={TextInput} />
               <Field name='description' rows={3} placeholder='Description' value={activity.description} component={TextAreaInput} />
-              <Field name='category' placeholder='Category' value={activity.category} component={TextInput} />
-              <Field name='date' placeholder='Date' value={activity.date} component={TextInput} />
+              <Field name='category' options={categoryOptions} placeholder='Category' value={activity.category} component={SelectInput} />
+              <Field name='date' placeholder='Date' value={activity.date} component={DateInput} />
               <Field name='city' placeholder='City' value={activity.city} component={TextInput} />
               <Field name='venue' placeholder='Venue' value={activity.venue} component={TextInput} />
               <Button loading={submitting} floated="right" positive type='submit' content="Submit" />
