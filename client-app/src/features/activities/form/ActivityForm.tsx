@@ -1,7 +1,6 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Segment, Form, Button, Grid } from 'semantic-ui-react'
-import { IActivityFormValues } from '../../../app/models/activity'
-import { v4 as uuid } from 'uuid'
+import {  ActivityFormValues } from '../../../app/models/activity'
 import ActivityStore from '../../../app/stores/activityStore'
 import { observer } from 'mobx-react-lite'
 import { RouteComponentProps } from 'react-router-dom'
@@ -21,29 +20,20 @@ interface DetailParams {
 const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
 
   const activityStore = useContext(ActivityStore);
-  const { createActivity, editActivity, submitting, activity: initialFormState, loadActivity, clearActivity } = activityStore;
+  const { submitting, loadActivity } = activityStore;
 
 
-  const [activity, setActivity] = useState<IActivityFormValues>({
-    id: undefined,
-    title: '',
-    category: '',
-    description: '',
-    date: undefined,
-    time: undefined,
-    city: '',
-    venue: ''
-  });
+  const [activity, setActivity] = useState(new ActivityFormValues());
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (match.params.id && activity.id) {
+    if (match.params.id) {
+      setLoading(true);
       loadActivity(match.params.id).then(
-        () => initialFormState && setActivity(initialFormState)
-      );
+        (activity) => setActivity(new ActivityFormValues(activity))
+      ).finally(() => setLoading(false));
     }
-    return () => {
-      clearActivity()
-    }
-  }, [loadActivity, clearActivity, match.params.id, initialFormState, activity.id]);
+  }, [loadActivity,  match.params.id]);
 
 
 
@@ -58,24 +48,24 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
   //     editActivity(activity).then(() => history.push(`/activities/${activity.id}`));
   //   }
   // }
+   // const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  //   const { name, value } = event.currentTarget;
+  //   setActivity({ ...activity, [name]: value })
+  // }
   const handleFinalFormSubmit = (values: any) => {
-
     const dateAndTime = combineDateAndTime(values.date, values.time);
     const { date, time, ...activity } = values;
     activity.date = dateAndTime;
     console.log(activity);
   }
-  const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.currentTarget;
-    setActivity({ ...activity, [name]: value })
-  }
+
 
   return (
     <Grid>
       <Grid.Column width={10}>
         <Segment clearing>
-          <FinalForm onSubmit={handleFinalFormSubmit} render={({ handleSubmit }) => (
-            <Form onSubmit={handleSubmit}>
+          <FinalForm initialValues={activity} onSubmit={handleFinalFormSubmit} render={({ handleSubmit }) => (
+            <Form onSubmit={handleSubmit} loading={loading}>
               <Field name='title' placeholder='Title' value={activity.title} component={TextInput} />
               <Field name='description' rows={3} placeholder='Description' value={activity.description} component={TextAreaInput} />
               <Field name='category' options={categoryOptions} placeholder='Category' value={activity.category} component={SelectInput} />
@@ -85,8 +75,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
               </Form.Group>
               <Field name='city' placeholder='City' value={activity.city} component={TextInput} />
               <Field name='venue' placeholder='Venue' value={activity.venue} component={TextInput} />
-              <Button loading={submitting} floated="right" positive type='submit' content="Submit" />
-              <Button onClick={() => history.push('/activities')} floated="right" type='submit' content="Cancel" />
+              <Button disabled={loading} loading={submitting} floated="right" positive type='submit' content="Submit" />
+              <Button disabled={loading} onClick={() => history.push('/activities')} floated="right" type='submit' content="Cancel" />
             </Form >
           )} />
         </Segment>
