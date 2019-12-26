@@ -2,6 +2,7 @@ import { observable, action, computed, configure, runInAction } from 'mobx';
 import { createContext, SyntheticEvent } from 'react';
 import { IActivity } from '../models/activity';
 import agent from '../api/agent';
+import { history } from '../..';
 
 configure({ enforceActions: 'always' })
 export class ActivityStore {
@@ -78,14 +79,16 @@ export class ActivityStore {
 
   @action createActivity = async (activity: IActivity) => {
     this.submitting = true;
+    console.log("activity", activity);
     try {
       await agent.Activities.create(activity)
       runInAction('creating activity', () => {
         this.activityRegistry.set(activity.id, activity);
         this.submitting = false;
-      })
-
-    } catch (error) {
+      });
+      history.push(`/activities/${activity.id}`);
+    }
+    catch (error) {
       runInAction('create activity error', () => {
         console.log(error)
         this.submitting = false;
@@ -101,6 +104,7 @@ export class ActivityStore {
         this.activity = activity;
         this.submitting = false
       })
+      history.push(`/activities/${activity.id}`);
     } catch (error) {
       runInAction('error editing activity', () => {
         this.submitting = false;
