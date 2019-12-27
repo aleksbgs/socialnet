@@ -47,6 +47,7 @@ namespace API
       var identityBuiler = new IdentityBuilder(builder.UserType, builder.Services);
       identityBuiler.AddEntityFrameworkStores<DataContext>();
       identityBuiler.AddSignInManager<SignInManager<AppUser>>();
+      services.AddAuthentication();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
