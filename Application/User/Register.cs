@@ -27,16 +27,13 @@ namespace Application.User
 
     public class CommandValidator : AbstractValidator<Command>
     {
-
       public CommandValidator()
       {
         RuleFor(x => x.DisplayName).NotEmpty();
         RuleFor(x => x.UserName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty();
         RuleFor(x => x.Password).NotEmpty();
-
       }
-
     }
 
     public class Handler : IRequestHandler<Command, User>
@@ -59,7 +56,6 @@ namespace Application.User
         if (await _context.Users.Where(x => x.UserName == request.UserName).AnyAsync())
           throw new RestException(System.Net.HttpStatusCode.BadRequest, new { UserName = "UserName already exists" });
 
-
         var user = new AppUser
         {
           DisplayName = request.DisplayName,
@@ -79,7 +75,6 @@ namespace Application.User
             Image = null
           };
         }
-
 
         throw new Exception("Problem creating user");
       }
