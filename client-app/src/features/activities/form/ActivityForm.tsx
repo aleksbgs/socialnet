@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Segment, Form, Button, Grid } from 'semantic-ui-react';
 import { ActivityFormValues } from '../../../app/models/activity';
-import ActivityStore from '../../../app/stores/activityStore';
 import { observer } from 'mobx-react-lite';
 import { RouteComponentProps } from 'react-router-dom'
 import { Form as FinalForm, Field } from 'react-final-form';
@@ -13,6 +12,7 @@ import DateInput from '../../../app/common/form/DateInput';
 import { combineDateAndTime } from '../../../app/common/util/util';
 import { v4 as uuid } from 'uuid';
 import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 const validate = combineValidators({
   title: isRequired({ message: 'The event title is required' }),
@@ -35,8 +35,8 @@ interface DetailParams {
 
 const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, history }) => {
 
-  const activityStore = useContext(ActivityStore);
-  const { submitting, loadActivity, createActivity, editActivity } = activityStore;
+  const rootStore = useContext(RootStoreContext);
+  const { submitting, loadActivity, createActivity, editActivity } = rootStore.activityStore;
 
 
   const [activity, setActivity] = useState(new ActivityFormValues());
@@ -72,7 +72,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
     <Grid>
       <Grid.Column width={10}>
         <Segment clearing>
-          <FinalForm validate={validate} initialValues={activity} onSubmit={handleFinalFormSubmit} render={({ handleSubmit, invalid, pristine })=> (
+          <FinalForm validate={validate} initialValues={activity} onSubmit={handleFinalFormSubmit} render={({ handleSubmit, invalid, pristine }) => (
             <Form onSubmit={handleSubmit} loading={loading}>
               <Field name='title' placeholder='Title' value={activity.title} component={TextInput} />
               <Field name='description' rows={3} placeholder='Description' value={activity.description} component={TextAreaInput} />
@@ -84,13 +84,13 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({ match, hist
               <Field name='city' placeholder='City' value={activity.city} component={TextInput} />
               <Field name='venue' placeholder='Venue' value={activity.venue} component={TextInput} />
               <Button
-                  loading={submitting}
-                  disabled={loading || invalid || pristine}
-                  floated='right'
-                  positive
-                  type='submit'
-                  content='Submit'
-                />
+                loading={submitting}
+                disabled={loading || invalid || pristine}
+                floated='right'
+                positive
+                type='submit'
+                content='Submit'
+              />
               <Button disabled={loading} onClick={activity.id ? () => history.push(`/activities/${activity.id}`) : () => history.push('/activities}')} floated="right" type='submit' content="Cancel" />
             </Form >
           )} />

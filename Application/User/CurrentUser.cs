@@ -4,7 +4,7 @@ using Application.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Persistance;
+
 
 namespace Application.User
 {
@@ -23,9 +23,7 @@ namespace Application.User
         _userAccessor = userAccessor;
         _jwtGenerator = jwtGenerator;
         _userManager = userManager;
-
       }
-
       public async Task<User> Handle(Query request, CancellationToken cancellationToken)
       {
         var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
