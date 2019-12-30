@@ -15,13 +15,13 @@ namespace API.Controllers
   {
 
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> List(CancellationToken ct)
+    public async Task<ActionResult<List<ActivityDto>>> List(CancellationToken ct)
     {
       return await Mediator.Send(new List.Query(), ct);
     }
     [HttpGet("{id}")]
     [Authorize]
-    public async Task<ActionResult<Activity>> Details(Guid id)
+    public async Task<ActionResult<ActivityDto>> Details(Guid id)
     {
       return await Mediator.Send(new Details.Query { Id = id });
     }
