@@ -64,7 +64,7 @@ namespace Application.Activities
           Category = request.Category,
           Date = request.Date,
           City = request.City,
-          Venue = request.Venue
+          Venue = request.Venue 
         };
         _context.Activities.Add(activity);
 
